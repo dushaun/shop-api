@@ -17,10 +17,22 @@ class Category extends Model
     ];
     
     /**
+     * Get a list of sub categories.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function children()
     {
         return $this->hasMany(Category::class, 'parent_id', 'id');
+    }
+
+    /**
+     * Return a list of Products related to the selected Category.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
     }
 }
