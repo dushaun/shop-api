@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Products;
 
 use App\Models\Product;
+use App\Scoping\Scopes\CategoryScope;
 use App\Transformers\ProductIndexTransformer;
 use App\Transformers\ProductTransformer;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::paginate(10);
+        $products = Product::withScopes($this->scopes())->paginate(10);
         $productsCollection = $products->getCollection();
 
         return fractal()
@@ -40,5 +41,17 @@ class ProductController extends Controller
             ->item($product)
             ->transformWith(new ProductTransformer())
             ->toArray();
+    }
+
+    /**
+     * Stated scopes to be used on ProductController.
+     *
+     * @return array
+     */
+    public function scopes()
+    {
+        return [
+            'category' => new CategoryScope()
+        ];
     }
 }
