@@ -16,7 +16,10 @@ class ProductTransformer extends ProductIndexTransformer
     public function transform(Product $product)
     {
         return array_merge(parent::transform($product), [
-            'variations' => []
+            'variations' => fractal()
+                ->collection($product->variations)
+                ->transformWith(new ProductVariationTransformer())
+                ->toArray()
         ]);
     }
 }

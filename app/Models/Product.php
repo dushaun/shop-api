@@ -37,4 +37,14 @@ class Product extends Model
     {
         return (new Scoper(request()))->apply($builder, $scopes);
     }
+
+    /**
+     * Return the Product Variations.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function variations()
+    {
+        return $this->hasMany(ProductVariation::class)->orderBy('order', 'asc');
+    }
 }
