@@ -27,9 +27,23 @@ class Scoper
      */
     public function apply(Builder $builder, array $scopes)
     {
-        foreach ($scopes as $key => $scope) {
+        foreach ($this->limitScopes($scopes) as $key => $scope) {
             if (!$scope instanceof Scope) continue;
             $scope->apply($builder, $this->request->get($key));
         }
+    }
+
+    /**
+     * Limit scopes to ones that actually exist.
+     *
+     * @param array $scopes
+     * @return array
+     */
+    protected function limitScopes(array $scopes)
+    {
+        return array_only(
+            $scopes,
+            array_keys($this->request->all())
+        );
     }
 }

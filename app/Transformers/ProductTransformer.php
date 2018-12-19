@@ -3,6 +3,7 @@
 namespace App\Transformers;
 
 use App\Models\Product;
+use App\Transformers\Serializers\DataSerializer;
 use League\Fractal\TransformerAbstract;
 
 class ProductTransformer extends ProductIndexTransformer
@@ -17,8 +18,9 @@ class ProductTransformer extends ProductIndexTransformer
     {
         return array_merge(parent::transform($product), [
             'variations' => fractal()
-                ->collection($product->variations)
+                ->collection($product->variations->groupBy('type.name'))
                 ->transformWith(new ProductVariationTransformer())
+                ->serializeWith(new DataSerializer())
                 ->toArray()
         ]);
     }
