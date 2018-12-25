@@ -10,7 +10,9 @@
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0",
-        "spatie/laravel-fractal": "^5.4"
+        "moneyphp/money": "^3.2",
+        "spatie/laravel-fractal": "^5.4",
+        "ext-intl": "*"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

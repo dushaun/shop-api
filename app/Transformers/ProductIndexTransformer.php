@@ -19,7 +19,8 @@ class ProductIndexTransformer extends TransformerAbstract
             'id' => $product->id,
             'name' => $product->name,
             'slug' => $product->slug,
-            'description' => $product->description
+            'description' => $product->description,
+            'price' => $product->formattedPrice
         ];
     }
 }
