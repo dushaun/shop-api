@@ -35,4 +35,14 @@ class Money
 
         return $formatter->format($this->money);
     }
+
+    /**
+     * Return the numeric value of the price.
+     *
+     * @return string
+     */
+    public function amount()
+    {
+        return $this->money->getAmount();
+    }
 }

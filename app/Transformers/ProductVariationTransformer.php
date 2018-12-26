@@ -29,7 +29,9 @@ class ProductVariationTransformer extends TransformerAbstract
 
         return [
             'id' => $variation->id,
-            'name' => $variation->name
+            'name' => $variation->name,
+            'price' => $variation->formattedPrice,
+            'price_varies' => $variation->priceVaries()
         ];
     }
 }

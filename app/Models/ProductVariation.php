@@ -2,10 +2,39 @@
 
 namespace App\Models;
 
+use App\Cart\Money;
+use App\Models\Traits\HasPrice;
 use Illuminate\Database\Eloquent\Model;
 
 class ProductVariation extends Model
 {
+    use HasPrice;
+
+    /**
+     * Prepare price attribute for formatting.
+     *
+     * @param $value
+     * @return Money
+     */
+    public function getPriceAttribute($value)
+    {
+        if ($value === null) {
+            return $this->product->price;
+        }
+
+        return new Money($value);
+    }
+
+    /**
+     * Check if the variation price differs from the product price.
+     *
+     * @return bool
+     */
+    public function priceVaries()
+    {
+        return $this->price->amount() !== $this->product->price->amount();
+    }
+
     /**
      * Get the type of product variation.
      *
