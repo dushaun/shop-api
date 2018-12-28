@@ -33,11 +33,8 @@ class ProductIndexTest extends TestCase
         $this->json('GET', 'api/products')
             ->assertJsonStructure([
                 'data',
-                'meta' => [
-                    'pagination' => [
-                        'links'
-                    ]
-                ]
+                'links',
+                'meta'
             ]);
     }
 }

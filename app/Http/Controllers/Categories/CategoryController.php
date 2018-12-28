@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Categories;
 
+use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use App\Transformers\CategoryTransformer;
 use Illuminate\Http\Request;
@@ -12,18 +13,15 @@ class CategoryController extends Controller
     /**
      * Return an index of Categories.
      *
-     * @return array
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index()
     {
-        $categories = Category::parents()
+        $categories = Category::with('children')
+            ->parents()
             ->ordered()
             ->get();
 
-        return fractal()
-            ->collection($categories)
-            ->parseIncludes(['children'])
-            ->transformWith(new CategoryTransformer())
-            ->toArray();
+        return CategoryResource::collection($categories);
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Products;
 
+use App\Http\Resources\ProductIndexResource;
+use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use App\Scoping\Scopes\CategoryScope;
 use App\Transformers\ProductIndexTransformer;
@@ -20,27 +22,19 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::withScopes($this->scopes())->paginate(10);
-        $productsCollection = $products->getCollection();
 
-        return fractal()
-            ->collection($productsCollection)
-            ->transformWith(new ProductIndexTransformer())
-            ->paginateWith(new IlluminatePaginatorAdapter($products))
-            ->toArray();
+        return ProductIndexResource::collection($products);
     }
 
     /**
      * Show selected Product.
      *
      * @param Product $product
-     * @return array
+     * @return ProductResource
      */
     public function show(Product $product)
     {
-        return fractal()
-            ->item($product)
-            ->transformWith(new ProductTransformer())
-            ->toArray();
+        return new ProductResource($product);
     }
 
     /**
