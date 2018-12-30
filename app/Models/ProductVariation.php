@@ -54,4 +54,14 @@ class ProductVariation extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    /**
+     * Get the stock of the selected variation.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function stocks()
+    {
+        return $this->hasMany(Stock::class);
+    }
 }
