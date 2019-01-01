@@ -36,6 +36,26 @@ class ProductVariation extends Model
     }
 
     /**
+     * Return in stock check of product variation.
+     *
+     * @return bool
+     */
+    public function inStock(): bool
+    {
+        return $this->stockCount() > 0;
+    }
+
+    /**
+     * Return dynamic stock count of product variation.
+     *
+     * @return int
+     */
+    public function stockCount(): int
+    {
+        return $this->stock->sum('pivot.stock');
+    }
+
+    /**
      * Get the type of product variation.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
@@ -56,12 +76,23 @@ class ProductVariation extends Model
     }
 
     /**
-     * Get the stock of the selected variation.
+     * Get the stock blocks of the selected variation.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function stocks()
     {
         return $this->hasMany(Stock::class);
+    }
+
+    /**
+     * Get the dynamic calculated stock.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function stock()
+    {
+        return $this->belongsToMany(ProductVariation::class, 'product_variation_stock_view')
+            ->withPivot(['stock', 'in_stock']);
     }
 }

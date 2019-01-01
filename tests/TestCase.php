@@ -8,4 +8,13 @@ use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication, RefreshDatabase;
+
+    protected $dropViews;
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->dropViews = true;
+    }
 }
