@@ -21,6 +21,28 @@ class Product extends Model
     }
 
     /**
+     * Return in stock check of product.
+     *
+     * @return bool
+     */
+    public function inStock(): bool
+    {
+        return $this->stockCount() > 0;
+    }
+
+    /**
+     * Return dynamic stock count of product.
+     *
+     * @return int
+     */
+    public function stockCount(): int
+    {
+        return $this->variations->sum(function ($variation) {
+            return $variation->stockCount();
+        });
+    }
+
+    /**
      * Return the Category the Product belongs to.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
