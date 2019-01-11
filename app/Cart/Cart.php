@@ -18,6 +18,8 @@ class Cart
     }
 
     /**
+     * Add users products to their cart.
+     *
      * @param $products
      */
     public function add($products)
@@ -26,6 +28,8 @@ class Cart
     }
 
     /**
+     * Format product data for storing.
+     *
      * @param $products
      * @return array
      */

@@ -17,6 +17,12 @@ class CartController extends Controller
         $this->middleware(['auth:api']);
     }
 
+    /**
+     * Store users products to their cart.
+     *
+     * @param CartStoreRequest $request
+     * @param Cart $cart
+     */
     public function store(CartStoreRequest $request, Cart $cart)
     {
         $cart->add($request->products);
