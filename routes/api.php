@@ -8,3 +8,9 @@ Route::prefix('auth')->namespace('Auth')->group(function () {
     Route::post('login', 'LoginController@action');
     Route::get('me', 'MeController@action');
 });
+
+Route::resource('cart', 'Cart\CartController');
+
+//Route::middleware(['auth:api'])->group(function () {
+//
+//});
