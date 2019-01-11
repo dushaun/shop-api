@@ -33,12 +33,27 @@ class Cart
      * @param $products
      * @return array
      */
-    protected function getStorePayload($products)
+    protected function getStorePayload(array $products): array
     {
         return collect($products)->keyBy('id')->map(function ($product) {
             return [
-                'quantity' => $product['quantity']
+                'quantity' => $product['quantity'] + $this->getCurrentQuantity($product['id'])
             ];
         })->toArray();
+    }
+
+    /**
+     * Return quantity of product in users cart, if there is any.
+     *
+     * @param int $productId
+     * @return int
+     */
+    protected function getCurrentQuantity(int $productId): int
+    {
+        if ($product = $this->user->cart->where('id', $productId)->first()) {
+            return $product->pivot->quantity;
+        }
+
+        return 0;
     }
 }
