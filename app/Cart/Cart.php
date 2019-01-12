@@ -41,6 +41,16 @@ class Cart
     }
 
     /**
+     * Delete s product in user's cart.
+     *
+     * @param int $productId
+     */
+    public function delete(int $productId)
+    {
+        $this->user->cart()->detach($productId);
+    }
+
+    /**
      * Format product data for storing.
      *
      * @param $products
