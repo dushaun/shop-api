@@ -9,7 +9,11 @@ Route::prefix('auth')->namespace('Auth')->group(function () {
     Route::get('me', 'MeController@action');
 });
 
-Route::resource('cart', 'Cart\CartController');
+Route::resource('cart', 'Cart\CartController', [
+    'parameters' => [
+        'cart' => 'productVariation'
+    ]
+]);
 
 //Route::middleware(['auth:api'])->group(function () {
 //

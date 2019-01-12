@@ -20,11 +20,24 @@ class Cart
     /**
      * Add users products to their cart.
      *
-     * @param $products
+     * @param array $products
      */
-    public function add($products)
+    public function add(array $products)
     {
         $this->user->cart()->syncWithoutDetaching($this->getStorePayload($products));
+    }
+
+    /**
+     * Update a product in user's cart.
+     *
+     * @param int $productId
+     * @param int $quantity
+     */
+    public function update(int $productId, int $quantity)
+    {
+        $this->user->cart()->updateExistingPivot($productId, [
+            'quantity' => $quantity
+        ]);
     }
 
     /**
