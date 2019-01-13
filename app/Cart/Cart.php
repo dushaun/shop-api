@@ -51,6 +51,14 @@ class Cart
     }
 
     /**
+     * Empty a user's cart.
+     */
+    public function empty()
+    {
+        $this->user->cart()->detach();
+    }
+
+    /**
      * Format product data for storing.
      *
      * @param $products
